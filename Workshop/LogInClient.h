@@ -7,7 +7,5 @@ class LogInClient {
 public:
 	ClientData enterClientData();
 
-	bool verifyClientExistance();
-
-	void addClient(ClientData&);
+	bool verifyClientExistence();
 };

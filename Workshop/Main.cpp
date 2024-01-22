@@ -1,5 +1,5 @@
-#include"LogIn.h"
 #include"LogInClient.h"
+
 
 
 int main() {
@@ -11,6 +11,9 @@ int main() {
 		return 0;
 	}
 	LogInClient logtest2;
-	if (logtest2.verifyClientExistance() == true) cout << endl << "damn it worked";
+	logtest2.verifyClientExistence();
+	PartsDatabase pd;
+	pd.updateCollection();
+	pd.print();
 	return 0;
 }

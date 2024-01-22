@@ -12,6 +12,11 @@ bool Client::operator==(Client& elem) {
 	}
 	return false;
 }
+Client::Client(ClientData information) : info(information) {}
+
+void Client::update() {
+	;
+}
 
 ClientData Client::getInfo() {
 	return info;

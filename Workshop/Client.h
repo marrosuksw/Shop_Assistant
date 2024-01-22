@@ -1,31 +1,19 @@
-#include<iostream>
-#include<fstream>
-#include<string>
-#include<vector>
-
-using namespace std;
-
-struct ClientData {
-	string name;
-	string surname;
-	string phoneNum;
-
-	bool operator==(ClientData&);
-
-	friend ostream& operator<<(ostream&, ClientData&);
-	
-};
+#include"PartsDatabase.h"
 
 
-class Client {
+class Client : public IClient {
 private:
 	ClientData info;
 public:
-	Client(ClientData information) : info(information) {}
+	Client(ClientData);
 
 	bool operator==(Client&);
 
-	ClientData getInfo();
+	ClientData getInfo() override;
+
+	void update() override;
+
+
 
 	friend ostream& operator<<(ostream&, Client&);
 };
