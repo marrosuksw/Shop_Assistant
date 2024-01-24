@@ -2,21 +2,23 @@
 #include<vector>
 #include<string>
 #include<fstream>
+#include<algorithm>
 
 using namespace std;
 
 struct Pair {
-	string log;
-	string passwd;
+	string login;
+	string password;
 
 	bool operator==(Pair&);
 };
 
 class LogIn {
 public:
+	string dbFilename = "assistantdb.txt";
 
 	Pair enterLoginData();
 
-	bool verifyLoginData(string);
+	bool verifyLoginData();
 };
 

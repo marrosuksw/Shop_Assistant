@@ -2,11 +2,13 @@
 
 using namespace std;
 
-class LogInClient {
+class ClientService {
 private:
 	ClientDatabase& database = database.getInstance();
-public:
+
 	ClientData enterClientData();
 
-	bool verifyClientExistence();
+	bool verifyClientExistence(ClientData);
+public:
+	void addClient();
 };

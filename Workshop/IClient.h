@@ -16,6 +16,7 @@ struct ClientData {
 class IClient {
 	public:
 
+
 		virtual ClientData getInfo() = 0;
 
 		virtual void update() = 0;

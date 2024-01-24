@@ -1,6 +1,6 @@
-Toyota kompresor_klimatyzacji NRF 1237 35 0001
-Toyota kompresor_klimatyzacji ELSTOCK 1334 0 0002
-Toyota kompresor_klimatyzacji HELLA 2131 1 0003
-Chevrolet lusterko BLIC 53 7 0004
-Honda filtr_oleju KOLBENSCHMIDT 20 5 0005
-Honda filtr-oleju MANN-FILTER 37 2 0006
+Toyota	kompresor_klimatyzacji	NRF	1237	9	1
+Toyota	kompresor_klimatyzacji	ELSTOCK	1334	0	2
+Toyota	kompresor_klimatyzacji	HELLA	2131	1	3
+Chevrolet	lusterko	BLIC	53	7	4
+Honda	filtr_oleju	KOLBENSCHMIDT	20	3	5
+Honda	filtr-oleju	MANN-FILTER	37	2	6

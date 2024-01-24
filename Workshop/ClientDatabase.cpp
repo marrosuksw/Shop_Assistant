@@ -1,5 +1,9 @@
 #include"ClientDatabase.h"
 
+ClientDatabase::ClientDatabase(){}
+ClientDatabase::~ClientDatabase() {
+}
+
 void ClientDatabase::addClientToBase(ClientData& clData) {
 	Client tempCl(clData);
 	ofstream clFile;
@@ -8,7 +12,7 @@ void ClientDatabase::addClientToBase(ClientData& clData) {
 		cout << "File opening error, please contact our support at 1-800-2063-2433";
 	}
 	clFile << endl << tempCl;
-	cout << "Client added";
+	updateCollection();
 }
 void ClientDatabase::updateCollection() {
 	ifstream clFile;
@@ -28,7 +32,20 @@ void ClientDatabase::updateCollection() {
 	}
 }
 vector<Client> ClientDatabase::fetchClientCollection() {
+	updateCollection();
 	return clientBase;
+}
+Client ClientDatabase::getClientThroughNumber(string phoneNum) {
+	ClientData dat;
+	Client concCl(dat);
+	for (it = clientBase.begin(); it != clientBase.end(); it++) {
+		concCl = *it;
+		if (concCl.getInfo().phoneNum == phoneNum) {
+			return concCl;
+		}
+	}
+	cerr << "no such client.";
+	return Client(-1);
 }
 //void ClientDatabase::print() {
 //	vector<Client> bruh = fetchClientCollection();

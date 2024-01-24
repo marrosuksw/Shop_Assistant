@@ -1,5 +1,16 @@
 #include"PartsDatabase.h"
 
+PartsDatabase::PartsDatabase(){}
+PartsDatabase::~PartsDatabase(){}
+
+void PartsDatabase::overwriteCollection() {
+	ofstream ptFile(statFilename, ios::trunc);
+	for (auto c : partsBase) {
+		ptFile << c.getCarBrand() << "\t" << c.getName() << "\t" << c.getManufacturer() << "\t" << c.getPrice()
+			<< "\t" << c.getQuantity() << "\t" << c.getID() << endl;
+	}
+}
+
 void PartsDatabase::updateCollection() {
 	ifstream ptFile;
 	ptFile.open(statFilename);
@@ -17,7 +28,17 @@ void PartsDatabase::updateCollection() {
 		pdata.quantity = quantity;
 		pdata.partID = ID;
 		ConcretePart tempPart(pdata);
-		partsBase.push_back(tempPart);
+
+		bool found = false;
+		for (auto& part : partsBase) {
+			if (part == tempPart) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			partsBase.push_back(tempPart);
+		}
 	}
 }
 
@@ -26,8 +47,8 @@ vector<ConcretePart> PartsDatabase::fetchPartsCollection() {
 }
 
 void PartsDatabase::print() {
-	vector<ConcretePart> bruh = fetchPartsCollection();
-		for (it = bruh.begin(); it != bruh.end(); it++) {
+	updateCollection();
+		for (it = partsBase.begin(); it != partsBase.end(); it++) {
 			ConcretePart some = *it;
 			PartData dat = some.getData();
 			cout << dat.carBrand << "\t";
@@ -37,4 +58,37 @@ void PartsDatabase::print() {
 			cout << dat.quantity << "\t";
 			cout << dat.partID << endl;
 		}
+}
+bool PartsDatabase::checkIfPartExists(int partID) {
+	vector<ConcretePart> tempV = fetchPartsCollection();
+	PartData partData;
+	ConcretePart tempObj(partData);
+	for (it = tempV.begin(); it != tempV.end(); it++) {
+		tempObj = *it;
+		if (tempObj.getID() == partID) {
+			return true;
+		}
+	}
+	return false;
+}
+ConcretePart PartsDatabase::getConcPartThroughID(int partID){
+	vector<ConcretePart> tempV = fetchPartsCollection();
+	PartData partData;
+	ConcretePart tempObj(partData);
+	for (it = tempV.begin(); it != tempV.end(); it++) {
+		tempObj = *it;
+		if (tempObj.getID() == partID) {
+			return tempObj;
+		}
+	}
+	exit(0);
+}
+void PartsDatabase::changeInCollection(ConcretePart concretePart) {
+	for (auto& part : partsBase) {
+		if (part == concretePart) {
+			part = concretePart;
+			return;
+		}
+	}
+
 }

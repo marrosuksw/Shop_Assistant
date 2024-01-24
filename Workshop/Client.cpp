@@ -1,5 +1,11 @@
 #include"Client.h"
 
+Client::Client(int errorFlag) : info{ "", "", "-1" } {
+
+}
+void Client::update() {
+	;
+}
 bool ClientData::operator==(ClientData& elem) {
 	if (name == elem.name && surname == elem.surname && phoneNum == elem.phoneNum) {
 		return true;
@@ -12,11 +18,13 @@ bool Client::operator==(Client& elem) {
 	}
 	return false;
 }
-Client::Client(ClientData information) : info(information) {}
-
-void Client::update() {
-	;
+Client& Client::operator=(const Client& other) {
+	if (this != &other) { 
+		this->info = other.info; 
+	}
+	return *this;
 }
+Client::Client(ClientData information) : info(information) {}
 
 ClientData Client::getInfo() {
 	return info;

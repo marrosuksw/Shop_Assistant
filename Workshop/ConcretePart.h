@@ -8,14 +8,17 @@ private:
 	
 public:
 	ConcretePart(PartData);
-
-	string getBrand();
-	string getName();
-	int getPrice();
+	ConcretePart& operator=(const ConcretePart&);
 	int getQuantity();
+	string getName();
+	string getManufacturer();
+	string getCarBrand();
+	int getPrice();
 	//void attach(IClient*) override;
 	//void detach(IClient*) override;
 	//void notify() override;
 	void setQuantity(int);
-	PartData getData();
+	PartData& getData();
+	int getID();
+	bool operator==(ConcretePart&);
 };

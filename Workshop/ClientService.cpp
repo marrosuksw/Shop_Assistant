@@ -1,7 +1,7 @@
-#include"LogInClient.h"
+#include"ClientService.h"
 
 
-ClientData LogInClient::enterClientData() {
+ClientData ClientService::enterClientData() {
 	ClientData temp;
 	cout << "Enter the client's name: ";
 	cin >> temp.name;
@@ -13,22 +13,24 @@ ClientData LogInClient::enterClientData() {
 	return temp;
 }
 
-bool LogInClient::verifyClientExistence() {
-
-	ClientData clientGivenData = enterClientData();
+bool ClientService::verifyClientExistence(ClientData clientData) {
 
 	vector<Client> clientCollection = database.fetchClientCollection();
 	vector<Client>::iterator it;
 
 	for (it = clientCollection.begin(); it != clientCollection.end(); it++) {
-		Client tempObj = *it;
-		if (tempObj.getInfo() == clientGivenData) {
-			cout << "Client exists" << endl;
+		Client client = *it;
+		if (client.getInfo() == clientData) {
+			cout << "Client exists." << endl;
 			return true;
 		}
 	}
 	cout << "Client doesnt exist. He/She will be added to the list of clients." << endl;
-	//rethink this
-	database.addClientToBase(clientGivenData);
-	return true;
+	return false;
+}
+void ClientService::addClient() {
+	ClientData clientData = enterClientData();
+	if (!verifyClientExistence(clientData)) {
+		database.addClientToBase(clientData);
+	}
 }

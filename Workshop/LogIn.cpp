@@ -3,31 +3,35 @@
 Pair LogIn::enterLoginData() {
 	Pair data;
 	cout << "login: ";
-	cin >> data.log;
+	cin >> data.login;
 	cout << "password: ";
-	cin >> data.passwd;
+	cin >> data.password;
 	cout << endl;
 	return data;
 }
-//make it a template function?
-//make both of this and LogInClient children of a InterfaceLogin class (virtual class)
 
-bool LogIn::verifyLoginData(string filename) {
+bool LogIn::verifyLoginData() {
 
-	Pair adminLoginAttempt = enterLoginData();
+
 
 	ifstream file;
-	file.open(filename);
+	file.open(dbFilename);
 	string correctLogin, correctPassword;
 	getline(file, correctLogin);
 	getline(file, correctPassword);
-	//cout << correctLogin << "  " << correctPassword;
 	Pair fileData;
-	fileData.log = correctLogin;
-	fileData.passwd = correctPassword;
-	if (adminLoginAttempt == fileData) {
-		file.close();
-		return true;
+	fileData.login = correctLogin;
+	fileData.password = correctPassword;
+	int failedAttempt = 0;
+	while (failedAttempt < 3) {
+		Pair adminLoginAttempt = enterLoginData();
+		if (adminLoginAttempt == fileData) {
+			file.close();
+			return true;
+		}
+		failedAttempt++;
+		cout << "Login attempt failed, please try again. You have " << 3 - failedAttempt << " attempt(s) left";
+		cout << endl;
 	}
 	file.close();
 	return false;
@@ -35,6 +39,6 @@ bool LogIn::verifyLoginData(string filename) {
 
 bool Pair::operator==(Pair& elem)
 	{
-	if (log == elem.log && passwd == elem.passwd) return true;
+	if (login == elem.login && password == elem.password) return true;
 	else return false;
 	}

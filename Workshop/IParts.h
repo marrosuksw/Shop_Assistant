@@ -15,6 +15,7 @@ struct PartData {
 	int price;
 	int quantity;
 	int partID;
+	bool operator==(const PartData& elem);
 };
 
 
