@@ -1,15 +1,12 @@
-#include"ShoppingCart.h"
+#include"PartService.h"
 
 
 class Client : public IClient {
 private:
 	ClientData info;
-	ShoppingCart userCart;
 public:
 	Client(int);
 	Client(ClientData);
-
-	ShoppingCart getCart();
 
 	bool operator==(Client&);
 

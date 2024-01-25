@@ -1,10 +1,11 @@
-#include"IParts.h"
+#include"PartData.h"
 #include<list>
 
-class ConcretePart : public IParts {
+class ConcretePart {
 private:
 	PartData pData;
-	list<IClient*> observersList;
+	vector<IClient*> observers;
+	vector<IClient*>::iterator it;
 	
 public:
 	ConcretePart(PartData);
@@ -14,11 +15,13 @@ public:
 	string getManufacturer();
 	string getCarBrand();
 	int getPrice();
-	//void attach(IClient*) override;
-	//void detach(IClient*) override;
-	//void notify() override;
 	void setQuantity(int);
 	PartData& getData();
 	int getID();
 	bool operator==(ConcretePart&);
+	void addObserver(IClient* observer);
+	void removeObserver(IClient* observer);
+	void notifyObservers();
+	vector<IClient*>getObserverList();
+	void addObserverAndUpdateFile(IClient*, int, ConcretePart&);
 };

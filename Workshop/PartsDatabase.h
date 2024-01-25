@@ -7,6 +7,8 @@ private:
 	vector<ConcretePart>::iterator it;
 	PartsDatabase();
 	~PartsDatabase();
+	void updateCollection();
+	vector<ConcretePart> fetchPartsCollection();
 public:
 	PartsDatabase(PartsDatabase&) = delete;
 	void operator=(const PartsDatabase&) = delete;
@@ -14,13 +16,9 @@ public:
 		static PartsDatabase instance;
 		return instance;
 	}
-	void updateCollection();
-	void addPartToBase(ConcretePart&);
-	vector<ConcretePart> fetchPartsCollection();
 	void print();
 	void changeInCollection(ConcretePart);
 	bool checkIfPartExists(int);
 	ConcretePart getConcPartThroughID(int);
 	void overwriteCollection();
-
 };

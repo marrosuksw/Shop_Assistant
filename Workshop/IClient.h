@@ -15,7 +15,7 @@ struct ClientData {
 
 class IClient {
 	public:
-
+		virtual ~IClient(){}
 
 		virtual ClientData getInfo() = 0;
 

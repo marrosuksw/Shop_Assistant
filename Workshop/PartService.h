@@ -7,5 +7,5 @@ private:
 public:
 	void displayParts();
 
-	void addQuantity();
+	ConcretePart addQuantity();
 };

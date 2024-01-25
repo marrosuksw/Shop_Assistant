@@ -36,6 +36,7 @@ vector<Client> ClientDatabase::fetchClientCollection() {
 	return clientBase;
 }
 Client ClientDatabase::getClientThroughNumber(string phoneNum) {
+	updateCollection();
 	ClientData dat;
 	Client concCl(dat);
 	for (it = clientBase.begin(); it != clientBase.end(); it++) {
@@ -47,13 +48,3 @@ Client ClientDatabase::getClientThroughNumber(string phoneNum) {
 	cerr << "no such client.";
 	return Client(-1);
 }
-//void ClientDatabase::print() {
-//	vector<Client> bruh = fetchClientCollection();
-//	for (it = bruh.begin(); it != bruh.end(); it++) {
-//		Client some = *it;
-//		ClientData dat = some.getInfo();
-//		cout << dat.name << endl;
-//		cout << dat.surname << endl;
-//		cout << dat.phoneNum << endl;
-//	}
-//}

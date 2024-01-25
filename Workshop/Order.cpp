@@ -31,14 +31,16 @@ bool Order::validateQuantity(int& quant, ConcretePart& concrPart) {
 	int quantity = concretePart.getQuantity();
 	int givenQuantity = askForQuantity();
 	if (quantity < givenQuantity) {
+		concrPart = concretePart;
+		quant = givenQuantity;
 		return false;
 	}
 	else if (givenQuantity <= 0) {
 		cout << endl << "Given input is wrong. The program will absolutely terminate now.";
 		exit(0);
 	}
-	concrPart = concretePart;
 	quant = givenQuantity;
+	concrPart = concretePart;
 	return true;
 }
 int Order::askForQuantity() {
@@ -49,15 +51,16 @@ int Order::askForQuantity() {
 }
 
 void Order::checkout() {
-	int quantityToBuy = 0;
+	int quantityToBuy=0;
 	PartData partData;
 	ConcretePart concretePart(partData);
 	ClientData clientData;
 	Client client(clientData);
 	client = getClient();
 	if (validateQuantity(quantityToBuy, concretePart) == false) {
-		cout << "it shoudlnt but it does";//add the client to the list of subscribers 
-		//client.getInfo().phoneNum;
+		concretePart.addObserverAndUpdateFile(&client, quantityToBuy, concretePart);
+		cout << "The client has been added to the list of observers." << endl;
+		cout << " If the item is in stock, the client will be notified through SMS.";
 	}
 	else {
 		int totalPrice = partData.price * quantityToBuy;
@@ -66,7 +69,6 @@ void Order::checkout() {
 		db.overwriteCollection();
 		db.print();
 		invoice(totalPrice, quantityToBuy, concretePart, client);
-		cout << "leaves invoice";
 	}
 
 	
@@ -75,7 +77,7 @@ void Order::invoice(int totalPrice, int quantity, ConcretePart concretePart, Cli
 	//get data for the invoice?
 	PartData partData = concretePart.getData();
 	ClientData clientData = client.getInfo();
-	string city, street, buildingNum, postalCode;
+	string city, cityLong = "", street, streetLong="", buildingNum, postalCode;
 	string company = "Jimmy's Part Shop";
 	string companyAdressStreet = "Jana Olbrachta 31";
 	string companyAdressTown = "01-210 Warszawa";
@@ -86,25 +88,46 @@ void Order::invoice(int totalPrice, int quantity, ConcretePart concretePart, Cli
 	char buffer[80];
 	strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", localTime);
 
-	cout << "Fill in your adress:" << endl;
+	cout << endl << "Fill in your adress : " << endl;
+	cout << "(Keep in mind - you can only enter a two-section city name." << endl;
+	cout << "Anything afterwards will be: client's street name, building number and postal code)" << endl << endl;
 	cout << "City of residence: ";
 	cin >> city;
-	cout << endl << "Street: ";
-	cin >> street;
-	cout << endl << "Number of the building: ";
+	if (getchar() == ' ') {
+		cin >> cityLong;
+		cleanseIn();
+	}
+	if (getchar() == ' ') {
+		cout << "Please don't press spaces after giving data." << endl;
+		cleanseIn();
+	}
+	cout <<"Street: (maximum - two-section street name)";
+	cin >> street;	
+	if (getchar() == ' '){
+		cin>>streetLong;
+		cleanseIn();
+	}
+	cout <<"Number of the building: ";
 	cin >> buildingNum;
-	cout << endl << "Postal code: ";
+	cleanseIn();
+	cout <<"Postal code: ";
 	cin >> postalCode;
+	cleanseIn();
 
-	string invFilename = clientData.surname + "_invoice.txt";
+	string invFilename = clientData.surname + "_" + clientData.phoneNum + "_invoice.txt";
 	fstream invoiceFile(invFilename, ios::out);
 	invoiceFile << "From:\t\t\tBill to:" << endl << company << "\t"
 		<< clientData.name << " " << clientData.surname << endl
-		<< companyAdressStreet << "\t" << street << " " << buildingNum << endl
-		<< companyAdressTown << "\t\t" << city << " " << postalCode << endl
+		<< companyAdressStreet << "\t" << street << " " << streetLong << " " << buildingNum << endl
+		<< companyAdressTown << "\t\t" << postalCode << city << " " << cityLong << " " << endl
 		<< companyPhone << "\t\t" << clientData.phoneNum << endl << endl
-		<< "Date: " << buffer << endl << "\tItems:\t\tQuantity:  Price per item\tIn total:" << endl
+		<< "Date: " << buffer << endl << "Items:\t   Quantity:  Price per item\tIn total:" << endl
 		<< "1. " << partData.name << "\t" << quantity << "\t" << partData.price << "\t\t"
 		<< partData.price*quantity;
 	invoiceFile.close();
+}
+void Order::cleanseIn() {
+	if (cin.fail())
+		cin.clear();
+	cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 }

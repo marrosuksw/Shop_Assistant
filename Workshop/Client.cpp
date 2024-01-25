@@ -4,7 +4,7 @@ Client::Client(int errorFlag) : info{ "", "", "-1" } {
 
 }
 void Client::update() {
-	;
+	cout << "Your requested part can be bought in store! Hurry up, there's a lot of clients!" << endl;
 }
 bool ClientData::operator==(ClientData& elem) {
 	if (name == elem.name && surname == elem.surname && phoneNum == elem.phoneNum) {

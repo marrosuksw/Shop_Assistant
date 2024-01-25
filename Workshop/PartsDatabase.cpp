@@ -48,6 +48,7 @@ vector<ConcretePart> PartsDatabase::fetchPartsCollection() {
 
 void PartsDatabase::print() {
 	updateCollection();
+	cout << "Brand:\t\tItem:\t     Made by: Price: Quantity: ID:" << endl;
 		for (it = partsBase.begin(); it != partsBase.end(); it++) {
 			ConcretePart some = *it;
 			PartData dat = some.getData();
