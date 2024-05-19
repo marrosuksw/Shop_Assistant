@@ -1,3 +1,4 @@
+#Shop Assistant
 This is a terminal-based application written in C++ that serves as 
 an assistant for shop clerks in making orders for clients in a car part shop.
 Functions include:
