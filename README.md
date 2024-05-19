@@ -5,6 +5,7 @@ Functions include:
 - ordering parts with given quantity
 - creating an invoice with user-provided data
 - mock notification system for ordering out-of-stock parts
+
 To access the application, the program requires a login and a password.
 Login: user
 Password: password
