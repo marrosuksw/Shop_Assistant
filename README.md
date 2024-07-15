@@ -10,5 +10,5 @@ Functions include:
 
 To access the application, the program requires a login and a password.
 Both login credentials are specified in the assistantdb.txt file.
-This project was required to implement a .txt file database system. Login data,
+This project's requirement was to implement .txt files as a database system. Login data,
 car part data and new invoices are stored in .txt files.
