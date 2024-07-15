@@ -9,7 +9,6 @@ Functions include:
 - mock notification system for ordering out-of-stock parts
 
 To access the application, the program requires a login and a password.
-Login: user
-Password: password
+Both login credentials are specified in the assistantdb.txt file.
 This project was required to implement a .txt file database system. Login data,
 car part data and new invoices are stored in .txt files.
